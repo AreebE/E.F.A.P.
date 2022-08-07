@@ -111,6 +111,7 @@ public class TextbookDisplayFragment extends Fragment {
             TextView current = new TextView(getActivity());
             current.setText(text[i]);
             current.setTextSize(getResources().getDimension(R.dimen.averageText));
+            current.setTextAppearance(R.style.normalFont);
             current.setTextColor(getResources().getColor(R.color.secondary));
             textLayout.addView(current);
         }

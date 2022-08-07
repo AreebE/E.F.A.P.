@@ -238,6 +238,12 @@ public class PictureFragment extends Fragment {
                                         currentList = item;
                                         listener.pictureTaken(currentList);
                                         current.removeAllRequests();
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getActivity(), "You can check the translated version now!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                     }
 
                                     @Override

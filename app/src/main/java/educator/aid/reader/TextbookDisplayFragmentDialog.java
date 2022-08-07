@@ -117,6 +117,7 @@ public class TextbookDisplayFragmentDialog extends DialogFragment {
             current.setText(text[i]);
             current.setTextSize(getResources().getDimension(R.dimen.averageText));
             current.setTextColor(getResources().getColor(R.color.secondary));
+            current.setTextAppearance(R.style.normalFont);
             textLayout.addView(current);
         }
 //        soundBarView = view.findViewById(R.id.soundbar);
