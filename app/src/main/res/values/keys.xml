@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="API_KEY">20279d65528f41bcb8cf3761792ce44e</string>
+    <string name="RAPID_API_KEY">"83aeeb0221msh08ef9a3b2339039p140c48jsnd81ca89a77f1"</string>
+    <string name="RAPID_API_HOST">voicerss-text-to-speech.p.rapidapi.com</string>
+
+</resources>

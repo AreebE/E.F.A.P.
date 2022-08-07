@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/information"
+        android:title="@string/information"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:iconTint="@color/primary"
+        app:showAsAction="always"
+        />
+
+    <item android:id="@+id/language"
+        android:title="@string/language"
+        android:iconTint="@color/primary"
+        android:icon="@drawable/translate_language"
+        app:showAsAction="always"/>
+
+</menu>

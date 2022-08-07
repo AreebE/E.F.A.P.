@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PictureFragment"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        >
+
+        <ImageView
+            android:id="@+id/textbookImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:background="@color/fadedSecondary"
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            />
+
+        <ImageButton
+            android:layout_margin="50dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/rotateButton"
+            android:background="@drawable/rounded_button"
+            android:src="@android:drawable/ic_menu_rotate"
+            />
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/averageMargin"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton android:id="@+id/cameraButton"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/camera"
+            android:scaleType="fitCenter"
+            android:background="@color/secondary"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"/>
+
+        <ImageButton android:id="@+id/uploadButton"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@android:drawable/stat_sys_upload"
+            android:scaleType="fitCenter"
+            android:background="@color/secondary"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

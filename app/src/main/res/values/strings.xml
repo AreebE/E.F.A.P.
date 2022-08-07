@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TextbookReader</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="askToEnable">Please enable your camera for this to work.</string>
+    <string name="information">Get Processed Text</string>
+    <string name="language">Set Language</string>
+    <string name="submit">Submit</string>
+    <string name="fromPrompt">From:</string>
+    <string name="toPrompt">To:</string>
+</resources>
