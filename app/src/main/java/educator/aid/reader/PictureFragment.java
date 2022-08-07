@@ -209,7 +209,11 @@ public class PictureFragment extends Fragment {
 
     public void processImage()
     {
-        processImage(((BitmapDrawable) ((ImageView) getView().findViewById(R.id.textbookImage)).getDrawable()).getBitmap());
+        ImageView img = (ImageView) getView().findViewById(R.id.textbookImage);
+        if (img.getDrawable() != null)
+        {
+            processImage(((BitmapDrawable) img.getDrawable()).getBitmap());
+        }
     }
 
     public void processImage(Bitmap b)

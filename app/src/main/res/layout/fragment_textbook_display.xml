@@ -29,12 +29,12 @@
         android:layout_margin="10dp"
         android:gravity="center">
 
-        <educator.aid.reader.SoundBarView android:id="@+id/soundbar"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            />
+<!--        <educator.aid.reader.SoundBarView android:id="@+id/soundbar"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:layout_weight="1"-->
+<!--            />-->
 
         <ImageButton android:id="@+id/playButton"
             android:src="@android:drawable/ic_media_pause"

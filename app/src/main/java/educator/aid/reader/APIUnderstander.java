@@ -37,6 +37,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -50,6 +51,47 @@ public class APIUnderstander
 {
     private static final String TAG = "APIUnderstander";
     private static final String BREAK_CHARACTERS = "<>";
+
+    public static final HashMap<String, String> locality = new HashMap<String, String>()
+    {
+        {
+            put(TranslateLanguage.ARABIC, "eg");
+            put(TranslateLanguage.BULGARIAN, "bg");
+            put(TranslateLanguage.CATALAN, "es");
+            put(TranslateLanguage.CHINESE, "cn");
+            put(TranslateLanguage.CROATIAN, "hr");
+            put(TranslateLanguage.CZECH, "cz");
+            put(TranslateLanguage.DANISH, "dk");
+            put(TranslateLanguage.DUTCH, "be");
+            put(TranslateLanguage.ENGLISH, "us");
+            put(TranslateLanguage.FINNISH, "fi");
+            put(TranslateLanguage.FRENCH, "fr");
+            put(TranslateLanguage.GERMAN, "de");
+            put(TranslateLanguage.GREEK, "gr");
+            put(TranslateLanguage.HEBREW, "il");
+            put(TranslateLanguage.HINDI, "in");
+            put(TranslateLanguage.HUNGARIAN, "hu");
+            put(TranslateLanguage.INDONESIAN, "id");
+            put(TranslateLanguage.ITALIAN, "it");
+            put(TranslateLanguage.JAPANESE, "jp");
+            put(TranslateLanguage.KOREAN, "kr");
+            put(TranslateLanguage.MALAY, "my");
+            put(TranslateLanguage.NORWEGIAN, "no");
+            put(TranslateLanguage.POLISH, "pl");
+            put(TranslateLanguage.PORTUGUESE, "pt");
+            put(TranslateLanguage.ROMANIAN, "ro");
+            put(TranslateLanguage.RUSSIAN, "ru");
+            put(TranslateLanguage.SLOVAK, "sk");
+            put(TranslateLanguage.SLOVENIAN, "si");
+            put(TranslateLanguage.SPANISH, "es");
+            put(TranslateLanguage.SWEDISH, "se");
+            put(TranslateLanguage.TAMIL, "in");
+            put(TranslateLanguage.THAI, "th");
+            put(TranslateLanguage.TURKISH, "tr");
+            put(TranslateLanguage.VIETNAMESE, "vn");
+        }
+
+    };
 
     public interface Listener<T>
     {
@@ -155,14 +197,14 @@ public class APIUnderstander
 
     }
 
-    public void createAudioClip(String text, Context context, Listener<MediaPlayer> listener)  {
+    public void createAudioClip(String text, String lang, Context context, Listener<MediaPlayer> listener)  {
         try
         {
             OkHttpClient client = new OkHttpClient();
 
             RequestBody body = new FormBody.Builder()
                     .add("src", text)
-                    .add("hl", "en-us")
+                    .add("hl", lang + "-" + locality.get(lang))
                     .add("r", "0")
                     .add("c", "mp3")
                     .add("f", "8khz_8bit_mono")
@@ -214,7 +256,6 @@ public class APIUnderstander
                 mediaPlayer.setDataSource(context.getCacheDir()+"/text.3gp");
 
                 mediaPlayer.prepare();
-                mediaPlayer.start();
 
                 listener.onSuccess(mediaPlayer);
             }

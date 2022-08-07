@@ -22,7 +22,9 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity
     implements PictureFragment.Listener,
-    LanguageChangeFragment.Listener {
+    LanguageChangeFragment.Listener,
+        TextbookDisplayFragmentDialog.Listener,
+        TextbookDisplayFragment.Listener {
 
     private String fromText;
     private String toText;
@@ -137,5 +139,10 @@ public class MainActivity extends AppCompatActivity
         this.fromText = from;
         this.toText = to;
         pictureFragment.processImage();
+    }
+
+    @Override
+    public String getOutputLang() {
+        return toText;
     }
 }

@@ -1,5 +1,6 @@
 package educator.aid.reader;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -21,24 +23,41 @@ import androidx.fragment.app.Fragment;
  */
 public class TextbookDisplayFragment extends Fragment {
 
+    public interface Listener
+    {
+        String getOutputLang();
+    }
+
     private static final long FRAME_DELAY = 1000/ 60;
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TEXT_KEY = "text";
     private static final String TAG = "TextbookDisplayFragment";
 
     private String[] text;
-    private SoundBarView soundBarView;
+    //    private SoundBarView soundBarView;
     private MediaPlayer mediaPlayer;
     private EventHandler handler;
     private APIUnderstander apiUnderstander;
     private ImageButton playButton;
     private boolean isPlaying = false;
+    private Listener listener;
     private Handler h;
 
     public TextbookDisplayFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Called when a fragment is first attached to its context.
+     * {@link #onCreate(Bundle)} will be called after this.
+     *
+     * @param context
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        listener = (Listener) getActivity();
+    }
 
     public static TextbookDisplayFragment newInstance(String[] text) {
         TextbookDisplayFragment fragment = new TextbookDisplayFragment();
@@ -79,8 +98,10 @@ public class TextbookDisplayFragment extends Fragment {
                     else
                     {
                         playButton.setImageDrawable(getActivity().getDrawable(android.R.drawable.ic_media_pause));
-                        mediaPlayer.stop();
+                        mediaPlayer.pause();
                     }
+                    playButton.postInvalidate();
+                    playButton.invalidate();
                 }
             }
         });
@@ -93,7 +114,27 @@ public class TextbookDisplayFragment extends Fragment {
             current.setTextColor(getResources().getColor(R.color.secondary));
             textLayout.addView(current);
         }
-        soundBarView = (SoundBarView) view.findViewById(R.id.soundbar);
+//        soundBarView = view.findViewById(R.id.soundbar);
+//        soundBarView.setListener(new SoundBarView.Listener() {
+//            @Override
+//            public void positionIsSet(int newTime) {
+//                Log.d(TAG, "called");
+//                if (mediaPlayer != null)
+//                {
+//                    mediaPlayer.pause();
+//                    playButton.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_media_pause));
+//                    playButton.postInvalidate();
+//                    isPlaying = false;
+//                    if (newTime * 1000 < mediaPlayer.getCurrentPosition())
+//                    {
+//                        mediaPlayer.seekTo(newTime * 1000);
+//                    }
+//                }
+//
+//            }
+//
+//
+//        });
         handler = new EventHandler();
         handler.handleTask(new Runnable() {
             @Override
@@ -103,34 +144,25 @@ public class TextbookDisplayFragment extends Fragment {
                 {
                     queryBuilder.append(text[i]);
                 }
-                apiUnderstander.createAudioClip(queryBuilder.toString(), getActivity(), new APIUnderstander.Listener<MediaPlayer>() {
+                apiUnderstander.createAudioClip(queryBuilder.toString(), listener.getOutputLang(), getActivity(), new APIUnderstander.Listener<MediaPlayer>() {
                     @Override
                     public void onSuccess(MediaPlayer item) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(getActivity(), "Audio Clip Loaded!", Toast.LENGTH_SHORT).show();
+                                isPlaying = false;
+                                mediaPlayer = item;
+//                                soundBarView.setCurrentLength(mediaPlayer.getDuration());
                             }
                         });
-                        isPlaying = false;
-                        mediaPlayer = item;
-                        soundBarView.setCurrentPlayTime(mediaPlayer.getDuration());
-                        soundBarView.setListener(new SoundBarView.Listener() {
-                            @Override
-                            public void positionIsSet(int newTime) {
-                                mediaPlayer.seekTo(newTime * 1000);
-                            }
 
-                            @Override
-                            public void positionIsChanging() {
-                                mediaPlayer.pause();
-                            }
-                        });
+
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-
+                        Log.d(TAG, e.toString());
                     }
                 });
             }
@@ -139,12 +171,18 @@ public class TextbookDisplayFragment extends Fragment {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isPlaying)
-                {
-                    soundBarView.setCurrentPlayTime(mediaPlayer.getCurrentPosition());
+                if (mediaPlayer != null
+                ) {
+                    if (isPlaying)
+                    {
+//                        soundBarView.setCurrentPlayTime(mediaPlayer.getCurrentPosition());
+                    }
+//                    Log.d(TAG, mediaPlayer.getCurrentPosition() + ", " + mediaPlayer.getDuration());
                 }
+                h.postDelayed(this,FRAME_DELAY);
             }
         }, FRAME_DELAY);
         return view;
     }
+
 }

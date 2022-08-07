@@ -22,7 +22,6 @@ public class SoundBarView extends View {
     public interface Listener
     {
         void positionIsSet(int newTime);
-        void positionIsChanging();
     }
 
     private static final double PLAY_HEIGHT_RATIO = 1.0 / 4;
@@ -46,10 +45,6 @@ public class SoundBarView extends View {
 
             }
 
-            @Override
-            public void positionIsChanging() {
-
-            }
         };
         this.totalLength = 7;
         this.currentTime = 0;
@@ -64,10 +59,6 @@ public class SoundBarView extends View {
 
             }
 
-            @Override
-            public void positionIsChanging() {
-
-            }
         };
         this.totalLength = 7;
         this.currentTime = 7;
@@ -77,11 +68,16 @@ public class SoundBarView extends View {
     {
         this.totalLength = (int) (length / 1000);
         currentTime = 0;
+        this.invalidate();
+        this.postInvalidate();
     }
 
     public void setCurrentPlayTime(long millis)
     {
         currentTime = (int) (millis / 1000);
+        Log.d(TAG, "calling the set --" + currentTime);
+        this.invalidate();
+        this.postInvalidate();
     }
 
     public int getCurrentPlayTime()
@@ -105,6 +101,7 @@ public class SoundBarView extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        Log.d(TAG, "redrawing");
         Context context = getContext();
         Paint background = new Paint();
         background.setColor(context.getColor(R.color.soundBackground));
@@ -171,25 +168,17 @@ public class SoundBarView extends View {
             currentTime = 0;
         }
 
-        switch (event.getAction())
-        {
-                // release
-            case MotionEvent.ACTION_UP:
-                listener.positionIsSet(currentTime);
-                break;
+        listener.positionIsSet(currentTime);
+        Log.d(TAG, "listener should be called");
 
-                // making move
-            case MotionEvent.ACTION_DOWN:
-                listener.positionIsChanging();
-                break;
-        }
         this.invalidate();
         return super.onTouchEvent(event);
     }
 
 
-    public void setListener(Listener listener)
+    public void setListener(Listener l)
     {
-        this.listener = listener;
+        this.listener = l;
+
     }
 }

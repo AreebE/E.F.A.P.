@@ -20,6 +20,9 @@ import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -34,7 +37,14 @@ public class LanguageChangeFragment extends DialogFragment {
     private static final String FROM_LANG = "from";
     private static final String TO_LANG = "to";
 
-    public static final List<String> languageTags = TranslateLanguage.getAllLanguages();
+    public static final List<String> languageTags = new ArrayList<String>(){{
+        Iterator<String> languages = APIUnderstander.locality.keySet().iterator();
+        while(languages.hasNext())
+        {
+            add(languages.next());
+        }
+        Collections.sort(this);
+    }};
     private static final String TAG = "LanguageChangeFrag";
     public static final List<String> languageNames = new ArrayList<String>(){
         {
